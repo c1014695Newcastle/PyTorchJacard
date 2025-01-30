@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://d3js.org/d3.v6.js"></script>
-    <title>Document</title>
+    <title>SHAP Clusters</title>
 </head>
 <body>
     <div id='container'></div>
@@ -17,8 +17,8 @@
         left: 40,
     };
 
-    const width = 1500;
-    const height = 1500;
+    const width = 700;
+    const height = 700;
 
     var  buffer = [];
     var count = 0;
@@ -55,12 +55,12 @@
             .call(d3.axisLeft(y));
 
         const dots = svg.selectAll("path")
-            .data(data) // Only want the first 2000 data points
+            .data(data.slice(0,2500)) // Only want the first 2000 data points
             .enter()
             .append("path")
             .attr("transform", (d) => `translate(${x(d.x)}, ${y(d.y)})`)
             .attr("r", 0.5)
-            .attr("opacity", 0.45)
+            .attr("opacity", 0.75)
             .attr("d", d3.symbol().type(d3.symbolCircle))
             .style("fill", (d) => color_scale(d.class))
 
