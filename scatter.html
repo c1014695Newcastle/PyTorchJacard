@@ -23,7 +23,7 @@
     var  buffer = [];
     var count = 0;
 
-    d3.csv('Data/shap_values_with_coordinates_indexed.csv').then(function(data){
+    d3.csv('Data/shap_values_2d_20-features_4-2-25_FIXED.csv').then(function(data){
         const color_scale = d3.scaleOrdinal()
             .domain(d3.extent(data,d => d.class))
             .range(["red", "blue"]);
@@ -55,7 +55,7 @@
             .call(d3.axisLeft(y));
 
         const dots = svg.selectAll("path")
-            .data(data.slice(0,2500)) // Only want the first 2000 data points
+            .data(data.slice(0,4000)) // Only want the first 2000 data points
             .enter()
             .append("path")
             .attr("transform", (d) => `translate(${x(d.x)}, ${y(d.y)})`)
