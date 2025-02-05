@@ -17,13 +17,13 @@
         left: 40,
     };
 
-    const width = 700;
-    const height = 700;
+    const width = 1000;
+    const height = 1000;
 
     var  buffer = [];
     var count = 0;
 
-    d3.csv('Data/shap_values_2d_20-features_4-2-25_FIXED.csv').then(function(data){
+    d3.csv('Data/shap_values_with_coordinates_indexed.csv').then(function(data){
         const color_scale = d3.scaleOrdinal()
             .domain(d3.extent(data,d => d.class))
             .range(["red", "blue"]);
@@ -55,12 +55,12 @@
             .call(d3.axisLeft(y));
 
         const dots = svg.selectAll("path")
-            .data(data.slice(0,4000)) // Only want the first 2000 data points
+            .data(data) // Only want the first 2000 data points
             .enter()
             .append("path")
             .attr("transform", (d) => `translate(${x(d.x)}, ${y(d.y)})`)
             .attr("r", 0.5)
-            .attr("opacity", 0.75)
+            .attr("opacity", 0.7)
             .attr("d", d3.symbol().type(d3.symbolCircle))
             .style("fill", (d) => color_scale(d.class))
 
@@ -80,7 +80,10 @@
                 )
                 .style("opacity", 1)
                 .data();
-                let indexes = value.map(d => dots.data().indexOf(d)); // map data to its index in the dots
+                let indexes = []
+                for (var i=0; i < value.length; i++){
+                    indexes.push(value[i].index)
+                }
                 console.log(indexes);
             } else {
                 dots.style("opacity", 1);
